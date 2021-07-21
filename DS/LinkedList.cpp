@@ -32,9 +32,11 @@ void insertNode(struct ListNode *head, int data, int position){
 
     newNode -> data = data;
     p = head;
+    q = head;
 
     if(position == 1){
         newNode -> next = p;
+        newNode -> next = q;
         head = newNode;
     }
     else{
@@ -59,7 +61,7 @@ void deleteNode(struct ListNode *head, int position){
 
     if(position == 1){
         head = (head) -> next;
-        free(p);
+        delete(p);
         return;
     }
     else{
@@ -73,7 +75,7 @@ void deleteNode(struct ListNode *head, int position){
         }
         else{
             q -> next = p -> next;
-            free(p);
+            delete(p);
         }
     }
 }
@@ -83,7 +85,7 @@ void deleteLinkedList(struct ListNode *head){
     iterator = head;
     while(iterator){
         aux = iterator -> next;
-        free(iterator);
+        delete(iterator);
         iterator = aux;
     }
     head = NULL;
@@ -94,7 +96,7 @@ void printLinkedList(struct ListNode *head){
     int count = 0;
     while(current != NULL){
         count++;
-        cout<<count<<" :"<<current->data;
+        cout<<"\n"<<count<<" :"<<current->data;
         current = current -> next;
     }
 }
@@ -102,8 +104,18 @@ void printLinkedList(struct ListNode *head){
 int main(){
     struct ListNode *node;
     int data = 10, ch, position = 1;
-    char choice = 'n';
-    do{
+    // deleteLinkedList(node);
+    insertNode(node,25,1);
+    insertNode(node,23,2);
+    insertNode(node,22,3);
+    insertNode(node,26,4);
+    printLinkedList(node);
+    deleteNode(node,3);
+    printLinkedList(node);
+    return 0;
+}
+/*
+do{
         cout<<"\nEnter your choice: ";
         cout<<"\n1.Insert node\n2.Delete node\n3.Length of linked list\n4.delete complete Linked list\n5.Print linked list: ";
         cin>>ch;
@@ -141,6 +153,4 @@ int main(){
         }
         cout<<"\nWant to continue(y/n)? ";
         cin>>choice;
-    }while(choice == 'y');
-    return 0;
-}
+    }while(choice == 'y');*/
