@@ -8,8 +8,8 @@ struct ListNode{
     struct ListNode *next;
 };
 
-int listLength(struct ListNode *head){
-    struct ListNode *current = head;
+int listLength(struct ListNode** head){
+    struct ListNode *current = *head;
 
     int count = 0;
 
@@ -20,35 +20,71 @@ int listLength(struct ListNode *head){
     return count;
 }
 
-void insertNode(struct ListNode *head, int data, int position){
-    int k = 1;
-    struct ListNode *p, *q, *newNode;
-    newNode = (ListNode*)malloc(sizeof(struct ListNode));
+void push(struct ListNode **head, int data){
+    struct ListNode* newNode = new ListNode();
+    newNode -> data = data;
+    newNode -> next = (*head);
+    *head = newNode;
+}
 
-    if(!newNode){
-        cout<<"\nMemory Error";
+void insertAfter(struct ListNode *prevNode, int data){
+    if(prevNode == NULL){
+        cout<<"\nThe previous node cannot be null\n";
         return;
     }
+    struct ListNode* newNode = new ListNode();
+    newNode -> data = data;
+    newNode -> next = prevNode -> next;
+    prevNode -> next = newNode;
+}
+
+void appendNode(struct ListNode** head, int data){
+    struct ListNode *newNode = new ListNode();
+    struct ListNode *last = *head;
 
     newNode -> data = data;
-    p = head;
-    q = head;
-
-    if(position == 1){
-        newNode -> next = p;
-        newNode -> next = q;
-        head = newNode;
+    newNode -> next = NULL;
+    if(*head == NULL){
+        *head = newNode;
+        return;
     }
-    else{
-        while((p != NULL) && (k < position)){
-            k++;
-            q = p;
-            p = p -> next;
-        }
-        q -> next = newNode;
-        newNode -> next = p;
+    while(last->next != NULL){
+        last = last->next;
     }
+    last->next = newNode;
+    return;
 }
+
+// void insertNode(struct ListNode *head, int data, int position){
+//     int k = 1;
+//     struct ListNode *p, *q, *newNode;
+//     newNode = new ListNode();
+
+//     if(!newNode){
+//         cout<<"\nMemory Error";
+//         return;
+//     }
+
+//     newNode -> data = data;
+//     p = head;
+//     q = head;
+
+//     if(position == 1){
+//         newNode -> data = data;
+//         newNode -> next = head;
+
+//         head = newNode;
+//     }
+//     else{
+//         while((p != NULL) && (k < position)){
+//             k++;
+//             q = p;
+//             p = p -> next;
+//         }
+//         q -> next = newNode;
+//         newNode -> next = p;
+//     }
+// }
 
 void deleteNode(struct ListNode *head, int position){
     int k = 1;
@@ -92,12 +128,11 @@ void deleteLinkedList(struct ListNode *head){
 }
 
 void printLinkedList(struct ListNode *head){
-    struct ListNode *current = head;
     int count = 0;
-    while(current != NULL){
+    while(head != NULL){
         count++;
-        cout<<"\n"<<count<<" :"<<current->data;
-        current = current -> next;
+        cout<<"\n"<<count<<" :"<<head->data;
+        head = head -> next;
     }
 }
 
@@ -105,10 +140,10 @@ int main(){
     struct ListNode *node;
     int data = 10, ch, position = 1;
     // deleteLinkedList(node);
-    insertNode(node,25,1);
-    insertNode(node,23,2);
-    insertNode(node,22,3);
-    insertNode(node,26,4);
+    appendNode(&node,25);
+    appendNode(&node,23);
+    appendNode(&node,22);
+    appendNode(&node,26);
     printLinkedList(node);
     deleteNode(node,3);
     printLinkedList(node);
