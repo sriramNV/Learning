@@ -79,6 +79,36 @@ class LinkedList{
         }
         insertAfter(prevNode, data);
     }
+
+    public void deleteHead(){
+        if(head == null)
+            return;
+        head = head.next;
+    }
+
+    public void deleteNode(int data){
+        Node temp = head;
+        Node temp1,temp2;
+        while(temp!=null){
+            if(temp.next.data == data){
+                temp1 = temp.next;
+                temp2 = temp1.next;
+                temp1 = null;
+                temp.next = temp2;
+                break;
+            }
+            temp = temp.next;
+        }
+        println("NOT FOUND");
+        return;
+    }
+    public void deleteLast(){
+        Node temp = head;
+        while(temp.next != null){
+            temp = temp.next;
+        }
+        temp = null;
+    }
 }
 
 
@@ -134,6 +164,23 @@ class Main{
                 }
                 break;
             case 2:
+                println("1.Delete first Node.");
+                println("2.Delete last Node.");
+                println("3.Delete Node in between of Linked list.");
+                ch2 = sc.nextInt();
+                switch(ch2){
+                    case 1:
+                        List.deleteHead();
+                        break;
+                    case 2:
+                        List.deleteLast();
+                        break;
+                    case 3:
+                        println("Enter data to be deleted: ");
+                        data = sc.nextInt();
+                        List.deleteNode(data);
+                        break;
+                }
                 break;
             case 3:
                 List.displayList();
