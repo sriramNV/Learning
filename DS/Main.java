@@ -89,13 +89,18 @@ class LinkedList{
     public void deleteNode(int data){
         Node temp = head;
         Node temp1,temp2;
+        if(head == null) return;
+        if(head.data == data) {
+            deleteHead();
+            return;
+        }
         while(temp!=null){
-            if(temp.next.data == data){
+            if((temp.next.data == data) && (temp.next != null)){
                 temp1 = temp.next;
                 temp2 = temp1.next;
                 temp1 = null;
                 temp.next = temp2;
-                break;
+                return;
             }
             temp = temp.next;
         }
@@ -104,10 +109,11 @@ class LinkedList{
     }
     public void deleteLast(){
         Node temp = head;
-        while(temp.next != null){
+        if(head == null) return;
+        while(temp.next.next != null){
             temp = temp.next;
         }
-        temp = null;
+        temp.next = null;
     }
 }
 
@@ -171,14 +177,18 @@ class Main{
                 switch(ch2){
                     case 1:
                         List.deleteHead();
+                        List.displayList();
                         break;
                     case 2:
                         List.deleteLast();
+                        List.displayList();
+
                         break;
                     case 3:
                         println("Enter data to be deleted: ");
                         data = sc.nextInt();
                         List.deleteNode(data);
+                        List.displayList();
                         break;
                 }
                 break;
